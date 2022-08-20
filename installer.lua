@@ -67,6 +67,7 @@ end
 
 print("Запись системы на диск "..fs.address)
 print("Форматирование диска..")
+fs.setLabel("itos")
 
 local listFiles = fs.list("/")
 if listFiles ~= nil then for i = 1, #listFiles do fs.remove(listFiles[i]) end end
