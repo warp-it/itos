@@ -20,6 +20,10 @@ function scene.repaint()
     if scene.current ~= nil then scene.current.repaint() end
 end
 
+function scene.clear()
+    gui.clear()
+end
+
 local handlers = setmetatable(
         {},
         { __index = function() return function() end end }

@@ -5,7 +5,8 @@ local os = require("os")
 local apps = {
 }
 
-local basePath = "/apps/"
+local basePath = "apps/"
+local mountsPath = "/mnt/"
 
 function apps.info(appFolder)
     local infoPath = basePath..appFolder.."info.json"
@@ -19,14 +20,24 @@ function apps.info(appFolder)
     if success then return result else return nil end
 end
 
-function apps.list()
-    local items = {}
-    for appPath in fs.list(basePath) do
+function apps.listInner(base, items)
+    for appPath in fs.list(base) do
         local item = apps.info(appPath)
         if item ~= nil then
             item.path = appPath
             table.insert(items, item)
         end
+    end
+end
+
+function apps.list()
+    local items = {}
+
+    apps.listInner("/"..basePath, items)
+
+    -- External apps
+    for mount in fs.list(mountsPath) do
+        apps.listInner(mountsPath..mount..basePath)
     end
 
     return items

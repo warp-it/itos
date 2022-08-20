@@ -84,4 +84,10 @@ function gui.windowDraw(title)
     gpu.set(2, 1, title)
 end
 
+function gui.clear()
+    gpu.setBackground(0x000000)
+    gpu.setForeground(0xFFFFFF)
+    gpu.fill(1, 1, gui.width, gui.height, " ")
+end
+
 return gui
