@@ -18,12 +18,12 @@ if fs == nil then print("Неправильный номер диска") os.exi
 filesystem.mount(fs, "/mnt/itos")
 
 local function write(file, content)
-    local handle = fs.open(file)
+    local handle = fs.open(file, "w")
     handle:write(content)
     handle:close()
 end
 
-local function get(url)
+local function request(url)
     local result = ""
     for chunk in inet.request(url) do
         result = result .. chunk
@@ -31,8 +31,11 @@ local function get(url)
     return result
 end
 
-local files = get("https://raw.githubusercontent.com/warp-it/itos/main/files")
+local function git(file)
+    return request("https://raw.githubusercontent.com/warp-it/itos/main/"..file)
+end
 
+local files = git("files")
 for line in files:gmatch("[^\r\n]+") do
 
 end

@@ -1,0 +1,8 @@
+bin
+boot
+etc
+home
+lib
+lib/it
+lib/tools
+lib/tools/devfs
