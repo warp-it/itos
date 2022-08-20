@@ -27,31 +27,35 @@ function it.error(text)
     it.message("Ошибка", text)
 end
 
-function it.apps()
-    it.menu("Запустить программу", function(menu)
+function it.appsList(title, action, onBefore)
+    it.menu(title, function(menu)
         menu.add("Назад", it.mainMenu)
+        if onBefore ~= nil then onBefore(menu) end
 
         local appItems = apps.list()
         for _, appItem in ipairs(appItems) do
-            menu.add(appItem.name, function()
-                apps.run(appItem.path)
-                it.mainMenu()
+            local proxy = appItem.proxy
+            local label = appItem.name
+            if proxy ~= nil then label = string.format("%s (%s)", label, proxy.getLabel()) end
+
+            menu.add(label, function()
+                action(appItem)
             end)
         end
     end)
 end
 
-function it.edit()
-    it.menu("Редактировать программу", function(menu)
-        menu.add("Назад", it.mainMenu)
+function it.apps()
+    it.appsList("Запустить программу", function(appItem)
+        apps.run(appItem.path)
+        it.mainMenu()
+    end)
+end
 
-        local appItems = apps.list()
-        for _, appItem in ipairs(appItems) do
-            menu.add(appItem.name, function()
-                apps.edit(appItem.path)
-                it.mainMenu()
-            end)
-        end
+function it.edit()
+    it.appsList("Редактировать программу", function(appItem)
+        apps.edit(appItem.path)
+        it.mainMenu()
     end)
 end
 
@@ -61,17 +65,11 @@ function it.setAutorun(value)
 end
 
 function it.autorun()
-    it.menu("Настройка автозапуска", function(menu)
-        menu.add("Назад", it.mainMenu)
+    it.appsList("Настройка автозапуска", function(appItem)
+        it.setAutorun(appItem.path)
+        it.mainMenu()
+    end, function(menu)
         menu.add("Выключить автозапуск", function() it.setAutorun("") it.mainMenu() end)
-
-        local appItems = apps.list()
-        for _, appItem in ipairs(appItems) do
-            menu.add(appItem.name, function()
-                it.setAutorun(appItem.path)
-                it.mainMenu()
-            end)
-        end
     end)
 end
 
@@ -81,16 +79,9 @@ function it.exitToShell()
 end
 
 function it.delete()
-    it.menu("Удалить программу", function(menu)
-        menu.add("Назад", it.mainMenu)
-
-        local appItems = apps.list()
-        for _, appItem in ipairs(appItems) do
-            menu.add(appItem.name, function()
-                fs.remove("/apps/"..appItem.path)
-                it.mainMenu()
-            end)
-        end
+    it.appsList("Удалить программу", function(appItem)
+        fs.remove("/apps/"..appItem.path)
+        it.mainMenu()
     end)
 end
 

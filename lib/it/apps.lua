@@ -20,13 +20,14 @@ function apps.info(appFolder)
     if success then return result else return nil end
 end
 
-function apps.listInner(base, items)
+function apps.listInner(proxy, base, items)
     for appPath in fs.list(base) do
         appPath = base..appPath
 
         local item = apps.info(appPath)
         if item ~= nil then
             item.path = appPath
+            item.proxy = proxy
             table.insert(items, item)
         end
     end
@@ -36,14 +37,14 @@ function apps.list()
     local items = {}
     local mainFileSystem, _ = fs.get("/")
 
-    apps.listInner("/"..basePath, items)
+    apps.listInner(mainFileSystem, "/"..basePath, items)
 
     -- External apps
     for mount in fs.list(mountsPath) do
         local subSystem, _ = fs.get(mountsPath..mount)
 
         if subSystem.address ~= mainFileSystem.address then
-            apps.listInner(mountsPath..mount..basePath, items)
+            apps.listInner(subSystem, mountsPath..mount..basePath, items)
         end
     end
 
