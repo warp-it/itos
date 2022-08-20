@@ -1,4 +1,3 @@
-bin
 bin/address.lua
 bin/alias.lua
 bin/cat.lua
@@ -56,7 +55,6 @@ bin/userdel.lua
 bin/wget.lua
 bin/which.lua
 bin/yes.lua
-boot
 boot/00_base.lua
 boot/01_process.lua
 boot/02_os.lua
@@ -69,16 +67,13 @@ boot/92_keyboard.lua
 boot/93_term.lua
 boot/94_shell.lua
 boot/99_rc.lua
-etc
 etc/filesystem.cfg
 etc/profile
 etc/rc.cfg
-home
 home/autorun.lua
 home/config.json
 home/it.lua
 init.lua
-lib
 lib/bit32.lua
 lib/buffer.lua
 lib/colors.lua
@@ -87,7 +82,6 @@ lib/event.lua
 lib/filesystem.lua
 lib/internet.lua
 lib/io.lua
-lib/it
 lib/it/apps.lua
 lib/it/config.lua
 lib/it/gui.lua
@@ -108,13 +102,11 @@ lib/shell.lua
 lib/sides.lua
 lib/term.lua
 lib/text.lua
-lib/tools
 lib/tools/boot.lua
 lib/tools/buffered_read.lua
 lib/tools/buffered_write.lua
 lib/tools/delayLookup.lua
 lib/tools/delayParse.lua
-lib/tools/devfs
 lib/tools/devfs/01_hw.lua
 lib/tools/devfs/02_utils.lua
 lib/tools/devfs/adapters
