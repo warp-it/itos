@@ -9,6 +9,7 @@ if computer.getArchitecture() ~= "Lua 5.3" then
     print("Обнаружена устаревшая архитектура процессора")
     print("Установщик поменяет архитектуру на Lua 5.3")
     print("Нажмите enter и запустите скрипт снова после перезагрузки")
+    term.read()
     computer.setArchitecture("Lua 5.3")
 end
 
