@@ -26,8 +26,8 @@ if fs == nil then print("Неправильный номер диска") os.exi
 print("")
 
 local function write(file, content)
-    local handle = fs.open(file, "w")
-    handle:write(content)
+    local handle = fs.open("/"..file, "w")
+    fs.write(handle, content)
     handle:close()
 end
 
