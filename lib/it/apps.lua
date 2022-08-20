@@ -9,7 +9,7 @@ local basePath = "apps/"
 local mountsPath = "/mnt/"
 
 function apps.info(appFolder)
-    local infoPath = basePath..appFolder.."info.json"
+    local infoPath = appFolder.."info.json"
     if not fs.exists(infoPath) then return nil end
 
     local infoFile = io.open(infoPath, "r")
@@ -22,7 +22,7 @@ end
 
 function apps.listInner(base, items)
     for appPath in fs.list(base) do
-        local item = apps.info(appPath)
+        local item = apps.info(base..appPath)
         if item ~= nil then
             item.path = appPath
             table.insert(items, item)
