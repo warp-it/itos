@@ -54,6 +54,7 @@ end
 
 function it.edit()
     it.appsList("Редактировать программу", function(appItem)
+        scene.clear()
         apps.edit(appItem.path)
         it.mainMenu()
     end)
