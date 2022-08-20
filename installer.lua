@@ -23,6 +23,7 @@ print("")
 local selection = tonumber(term.read())
 local fs = filesystems[selection]
 if fs == nil then print("Неправильный номер диска") os.exit() end
+print("")
 
 local function write(file, content)
     local handle = fs.open(file, "w")
