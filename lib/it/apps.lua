@@ -22,7 +22,9 @@ end
 
 function apps.listInner(base, items)
     for appPath in fs.list(base) do
-        local item = apps.info(base..appPath)
+        appPath = base..appPath
+
+        local item = apps.info(appPath)
         if item ~= nil then
             item.path = appPath
             table.insert(items, item)
@@ -44,12 +46,12 @@ function apps.list()
 end
 
 function apps.run(appFolder)
-    local path = basePath..appFolder.."main.lua"
+    local path = appFolder.."main.lua"
     if fs.exists(path) then os.execute(path) end
 end
 
 function apps.edit(appFolder)
-    local path = basePath..appFolder.."main.lua"
+    local path = appFolder.."main.lua"
     if fs.exists(path) then os.execute("edit "..path) end
 end
 
