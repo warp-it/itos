@@ -37,7 +37,7 @@ function apps.list()
 
     -- External apps
     for mount in fs.list(mountsPath) do
-        apps.listInner(mountsPath..mount..basePath)
+        apps.listInner(mountsPath..mount..basePath, items)
     end
 
     return items
