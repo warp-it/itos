@@ -1,3 +1,5 @@
+apps/devices/info.json
+apps/devices/main.lua
 bin/address.lua
 bin/alias.lua
 bin/cat.lua
