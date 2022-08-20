@@ -28,7 +28,7 @@ print("")
 local function write(file, content)
     local handle = fs.open("/"..file, "w")
     fs.write(handle, content)
-    handle:close()
+    fs.close(handle)
 end
 
 local function request(url)
