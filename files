@@ -70,6 +70,7 @@ boot/99_rc.lua
 etc/filesystem.cfg
 etc/profile
 etc/rc.cfg
+home/.shrc
 home/autorun.lua
 home/config.json
 home/it.lua
