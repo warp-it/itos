@@ -34,12 +34,17 @@ end
 
 function apps.list()
     local items = {}
+    local mainFileSystem, _ = fs.get("/")
 
     apps.listInner("/"..basePath, items)
 
     -- External apps
     for mount in fs.list(mountsPath) do
-        apps.listInner(mountsPath..mount..basePath, items)
+        local subSystem, _ = fs.get(mountsPath..mount)
+
+        if subSystem.address ~= mainFileSystem.address then
+            apps.listInner(mountsPath..mount..basePath, items)
+        end
     end
 
     return items
