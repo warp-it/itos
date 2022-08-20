@@ -6,3 +6,4 @@ lib
 lib/it
 lib/tools
 lib/tools/devfs
+lib/tools/devfs/adapters

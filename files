@@ -109,7 +109,6 @@ lib/tools/delayLookup.lua
 lib/tools/delayParse.lua
 lib/tools/devfs/01_hw.lua
 lib/tools/devfs/02_utils.lua
-lib/tools/devfs/adapters
 lib/tools/devfs/adapters/computer.lua
 lib/tools/devfs/adapters/eeprom.lua
 lib/tools/devfs/adapters/filesystem.lua
