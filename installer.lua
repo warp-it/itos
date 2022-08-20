@@ -14,16 +14,33 @@ if computer.getArchitecture() ~= "Lua 5.3" then
 end
 
 local filesystems = {}
-for address, _ in component.list("filesystem") do table.insert(filesystems, component.proxy(address)) end
+local count = 0
+local firstFilesystem = nil
+for address, _ in component.list("filesystem") do
+    local proxy = component.proxy(address)
 
-print("Выберите диск для установки:")
-for i, fs in ipairs(filesystems) do print(string.format("%d - %s (%s)", i, fs.address, fs.getLabel())) end
-print("")
+    if proxy.getLabel() ~= "tmpfs" and proxy.getLabel() ~= "openos" then
+        firstFilesystem = proxy
+        table.insert(filesystems, proxy)
+        count = count + 1
+    end
+end
 
-local selection = tonumber(term.read())
-local fs = filesystems[selection]
-if fs == nil then print("Неправильный номер диска") os.exit() end
-print("")
+local fs = firstFilesystem
+
+if count < 1 then
+    print("Отсутствует диск для установки (метка не tmpfs и не openos)")
+    os.exit()
+elseif count > 1 then
+    print("Выберите диск для установки:")
+    for i, item in ipairs(filesystems) do print(string.format("%d - %s (%s)", i, item.address, item.getLabel())) end
+    print("")
+
+    local selection = tonumber(term.read())
+    fs = filesystems[selection]
+    if fs == nil then print("Неправильный номер диска") os.exit() end
+    print("")
+end
 
 local function write(file, content)
     local handle = fs.open("/"..file, "w")
