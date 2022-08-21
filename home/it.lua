@@ -71,7 +71,7 @@ end
 function it.update()
     it.menu("Обновление", function(menu)
         menu.add("Назад", it.mainMenu)
-        menu.add("Обновить", function() os.execute("pastebin run Xtws70Dp") end)
+        menu.add("Обновить", function() scene.clear() os.execute("pastebin run Xtws70Dp") end)
     end)
 end
 
