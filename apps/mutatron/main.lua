@@ -38,7 +38,7 @@ function app.selectInventory(title, onSelect, onCancel)
         menu.add("")
 
         for address, chest in pairs(inventory.list()) do
-            menu.add(string.format("%s (%s)", address, chest.type), function() onSelect(chest) end)
+            menu.add(chest.label, function() onSelect(chest) end)
         end
     end)
 end
@@ -60,6 +60,7 @@ function app.buttonSelectInventory(menu, code, title)
     menu.add(string.format("%s - %s (%s)", value.label, code, title), function()
         app.selectInventory(title, function(selection)
             app.config[code] = selection
+            app.saveConfig()
             app.reset()
         end, function()
             app.reset()
@@ -73,6 +74,7 @@ function app.buttonSelectSide(menu, code, title)
     menu.add(string.format("%s - %s (%s)", value, code, title), function()
         app.selectSide(title, function(selection)
             app.config[code] = selection
+            app.saveConfig()
             app.reset()
         end, function()
             app.reset()
@@ -96,14 +98,21 @@ function app.reset()
     end)
 end
 
+function app.run()
+    scene.menu("Мутируем..", function(menu)
+        menu.add("Остановить", app.main)
+    end)
+end
+
 function app.main()
     scene.menu("Мутатор", function(menu)
-        menu.add("Запуск")
+        menu.add("Запуск", app.run)
         menu.add("Настройка", app.reset)
         menu.add("Выход", function() scene.clear() os.exit() end)
     end)
 end
 
+app.loadConfig()
 app.main()
 while alive do scene.handleEvents() end
 scene.clear()
