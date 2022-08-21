@@ -127,5 +127,6 @@ function it.mainMenu()
     end)
 end
 
+os.execute("rm /home/error.log")
 it.mainMenu()
 while true do scene.handleEvents() end
