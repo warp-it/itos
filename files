@@ -7,6 +7,7 @@ bin/cd.lua
 bin/clear.lua
 bin/components.lua
 bin/cp.lua
+bin/crash.lua
 bin/date.lua
 bin/df.lua
 bin/dmesg.lua

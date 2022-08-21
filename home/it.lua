@@ -74,6 +74,12 @@ function it.update()
     end)
 end
 
+function it.errorLog()
+    scene.clear()
+    os.execute("edit /home/error.log")
+    it.mainMenu()
+end
+
 function it.setAutorun(value)
     config.data.autorun = value
     config.save()
@@ -114,6 +120,7 @@ function it.mainMenu()
         menu.add("В консоль", it.exitToShell)
         menu.add("Lua", it.lua)
         menu.add("Обновить", it.update)
+        menu.add("Лог ошибок", it.errorLog)
         menu.add("")
         menu.add("Перезагрузить", it.reboot)
         menu.add("Выключить", it.shutdown)

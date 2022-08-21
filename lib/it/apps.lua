@@ -53,7 +53,7 @@ end
 
 function apps.run(appFolder)
     local path = appFolder.."main.lua"
-    if fs.exists(path) then os.execute(path.." 2>/home/error.log") end
+    if fs.exists(path) then os.execute("crash /home/error.log "..path) end
 end
 
 function apps.edit(appFolder, deleteBeforeEdit)
