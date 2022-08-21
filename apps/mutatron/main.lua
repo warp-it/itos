@@ -32,8 +32,8 @@ function app.saveConfig()
     config.save()
 end
 
-function app.selectInventory(onSelect, onCancel)
-    scene.menu("Выбор инвентаря", function(menu)
+function app.selectInventory(title, onSelect, onCancel)
+    scene.menu(string.format("Выбор инвентаря (%s)", title), function(menu)
         menu.add("Назад", function() onCancel() end)
         menu.add("")
 
@@ -43,8 +43,43 @@ function app.selectInventory(onSelect, onCancel)
     end)
 end
 
-function app.reset()
+function app.selectSide(title, onSelect, onCancel)
+    scene.menu(string.format("Выбор стороны (%s)", title), function(menu)
+        menu.add("Назад", function() onCancel() end)
+        menu.add("")
 
+        for _, side in ipairs(inventory.sides()) do
+            menu.add(string.format("%s", side), function() onSelect(side) end)
+        end
+    end)
+end
+
+function app.buttonSelect(menu, func, code, title)
+    local value = app.config[code]
+
+    menu.add(string.format("%s - %s (%s)", value.label, code, title), function()
+        func(title, function(selection)
+            app.config[code] = selection
+        end, function()
+            app.reset()
+        end)
+    end)
+end
+
+function app.reset()
+    scene.menu("Настройка", function(menu)
+        menu.add("Назад", app.main)
+        menu.add("")
+        app.buttonSelect(menu, app.selectInventory, "sample", "Сундук образца")
+        app.buttonSelect(menu, app.selectInventory, "input", "Сундук входа каменных")
+        app.buttonSelect(menu, app.selectInventory, "output", "Сундук выхода мутированных")
+        app.buttonSelect(menu, app.selectInventory, "reverse", "Сундук обратного хода в пасеку")
+        app.buttonSelect(menu, app.selectInventory, "decision", "Сундук принятия решений (центр)")
+        menu.add("")
+        app.buttonSelect(menu, app.selectSide, "side_input_to_decision", "От сундука входа к сундуку принятия решений")
+        app.buttonSelect(menu, app.selectSide, "side_decision_to_reverse", "От сундука принятия решений к сундуку обратного хода")
+        app.buttonSelect(menu, app.selectSide, "side_decision_to_output", "От сундука принятия решений к сундуку выхода")
+    end)
 end
 
 function app.main()

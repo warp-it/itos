@@ -9,7 +9,11 @@ function inventory.list()
 
     for _, type in ipairs(inventory.types) do
         for address, _ in component.list(type) do
-            result[address] = component.proxy(address)
+            result[address] = {
+                label = string.format("%s (%s)", address, type),
+                address = address,
+                proxy = function() return component.proxy(address) end,
+            }
         end
     end
 
@@ -22,7 +26,9 @@ end
 
 function inventory.dummy()
     return {
-        label = "[Не выбрано]"
+        label = "[Не выбрано]",
+        address = "",
+        proxy = function() return nil end,
     }
 end
 
