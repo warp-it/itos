@@ -31,6 +31,7 @@ function it.appsList(title, action, onBefore)
     it.menu(title, function(menu)
         menu.add("Назад", it.mainMenu)
         if onBefore ~= nil then onBefore(menu) end
+        menu.add("")
 
         local appItems = apps.list()
         for _, appItem in ipairs(appItems) do
