@@ -68,6 +68,13 @@ function it.lua()
     it.mainMenu()
 end
 
+function it.update()
+    it.menu("Обновление", function(menu)
+        menu.add("Назад", it.mainMenu)
+        menu.add("Обновить", function() os.execute("pastebin run Xtws70Dp") end)
+    end)
+end
+
 function it.setAutorun(value)
     config.data.autorun = value
     config.save()
@@ -106,6 +113,8 @@ function it.mainMenu()
         menu.add("Настройка автозапуска", it.autorun)
         menu.add("В консоль", it.exitToShell)
         menu.add("Lua", it.lua)
+        menu.add("Обновить", it.update)
+        menu.add("")
         menu.add("Перезагрузить", it.reboot)
         menu.add("Выключить", it.shutdown)
     end)
