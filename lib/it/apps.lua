@@ -56,9 +56,12 @@ function apps.run(appFolder)
     if fs.exists(path) then os.execute(path) end
 end
 
-function apps.edit(appFolder)
+function apps.edit(appFolder, deleteBeforeEdit)
     local path = appFolder.."main.lua"
-    if fs.exists(path) then os.execute("edit "..path) end
+    if fs.exists(path) then
+        if deleteBeforeEdit then os.execute("rm "..path) end
+        os.execute("edit "..path)
+    end
 end
 
 return apps
