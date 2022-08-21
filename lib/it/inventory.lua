@@ -16,6 +16,20 @@ function inventory.list()
     return result
 end
 
+function inventory.sides()
+    return { "DOWN", "UP", "NORTH", "SOUTH", "WEST", "EAST", "UNKNOWN" }
+end
+
+function inventory.dummy()
+    return {
+        label = "[Не выбрано]"
+    }
+end
+
+function inventory.dummySide()
+    return "UNKNOWN"
+end
+
 
 
 return inventory

@@ -88,6 +88,7 @@ lib/io.lua
 lib/it/apps.lua
 lib/it/config.lua
 lib/it/gui.lua
+lib/it/inventory.lua
 lib/it/menu.lua
 lib/it/message.lua
 lib/it/scene.lua

@@ -1,5 +1,6 @@
 local event = require("event")
 local gui = require("gui")
+local menuLib = require("menu")
 
 local scene = {
     current = nil,
@@ -22,6 +23,14 @@ end
 
 function scene.clear()
     gui.clear()
+end
+
+function scene.menu(title, makeItems)
+    scene.setTitle(title)
+    local menu = menuLib.create()
+    makeItems(menu)
+    scene.setCurrent(menu)
+    scene.repaint()
 end
 
 local handlers = setmetatable(

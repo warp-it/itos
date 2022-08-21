@@ -1,4 +1,3 @@
-local menuLib = require("menu")
 local messageLib = require("message")
 local scene = require("scene")
 local apps = require("apps")
@@ -8,14 +7,6 @@ local fs = require("filesystem")
 local os = require("os")
 
 local it = {}
-
-function it.menu(title, makeItems)
-    scene.setTitle(title)
-    local menu = menuLib.create()
-    makeItems(menu)
-    scene.setCurrent(menu)
-    scene.repaint()
-end
 
 function it.message(title, text)
     scene.setTitle(title)
@@ -29,7 +20,7 @@ function it.error(text)
 end
 
 function it.appsList(title, action, onBefore)
-    it.menu(title, function(menu)
+    scene.menu(title, function(menu)
         menu.add("Назад", it.mainMenu)
         if onBefore ~= nil then onBefore(menu) end
         menu.add("")
@@ -69,7 +60,7 @@ function it.lua()
 end
 
 function it.update()
-    it.menu("Обновление", function(menu)
+    scene.menu("Обновление", function(menu)
         menu.add("Назад", it.mainMenu)
         menu.add("Обновить", function() scene.clear() os.execute("pastebin run Xtws70Dp") end)
     end)
@@ -105,7 +96,7 @@ function it.reboot() computer.shutdown(true) end
 function it.shutdown() computer.shutdown(false) end
 
 function it.mainMenu()
-    it.menu("IT Менеджер", function(menu)
+    scene.menu("IT Менеджер", function(menu)
         menu.add("Запустить программу", it.apps)
         menu.add("Редактировать программу", it.edit)
         --menu.add("Удалить программу", it.delete)
