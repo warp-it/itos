@@ -1,5 +1,6 @@
 local scene = require("scene")
 local inventory = require("inventory")
+local json = require("json")
 
 local function generateConfig()
     return {
@@ -98,10 +99,35 @@ function app.reset()
     end)
 end
 
+function app.loop(state)
+    local items = state.decision.all()
+
+    for slot, item in pairs(items) do
+        scene.setTitle(string.format("%d - %s", slot, json.encode(item)))
+    end
+end
+
 function app.run()
-    scene.menu("Мутируем..", function(menu)
-        menu.add("Остановить", app.main)
+    local isRunning = true
+
+    scene.menu("Приступаем к мутациям", function(menu)
+        menu.add("Остановить", function()
+            isRunning = false
+        end)
     end)
+
+    local state = {
+        mutating = false,
+        decision = inventory.makeProxy(app.config.decision),
+    }
+
+    while isRunning do
+        app.loop(state)
+        scene.handleEvents()
+        os.sleep(1)
+    end
+
+    app.main()
 end
 
 function app.main()

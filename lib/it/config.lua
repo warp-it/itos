@@ -27,8 +27,9 @@ function config.load()
 end
 
 function config.save()
+    local data = json.encode(config.data)
     local configFile = io.open(configFileName, "w")
-    configFile:write(json.encode(config.data))
+    configFile:write(data)
     configFile:close()
 end
 
