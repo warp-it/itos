@@ -5,6 +5,7 @@ local apps = require("apps")
 local config = require("config")
 local computer = require("computer")
 local fs = require("filesystem")
+local os = require("os")
 
 local it = {}
 
@@ -61,6 +62,12 @@ function it.edit()
     end)
 end
 
+function it.lua()
+    scene.clear()
+    os.execute("lua")
+    it.mainMenu()
+end
+
 function it.setAutorun(value)
     config.data.autorun = value
     config.save()
@@ -98,6 +105,7 @@ function it.mainMenu()
         menu.add("")
         menu.add("Настройка автозапуска", it.autorun)
         menu.add("В консоль", it.exitToShell)
+        menu.add("Lua", it.lua)
         menu.add("Перезагрузить", it.reboot)
         menu.add("Выключить", it.shutdown)
     end)
